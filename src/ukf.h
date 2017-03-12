@@ -2,7 +2,7 @@
 #define UKF_H
 #include "Eigen/Dense"
 #include "measurement_package.h"
-#include "ground_truth_package.h"
+//#include "ground_truth_package.h"
 #include <vector>
 
 using Eigen::MatrixXd;
@@ -86,7 +86,7 @@ public:
    * @param meas_package The latest measurement data of either radar or laser
    * @param gt_package The ground truth of the state x at measurement time
    */
-  void ProcessMeasurement(MeasurementPackage meas_package);
+  void ProcessMeasurement(const MeasurementPackage& m);
 
   /**
    * Prediction Predicts sigma points, the state, and the state covariance
@@ -99,13 +99,17 @@ public:
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(const MeasurementPackage& m);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(const MeasurementPackage& m);
+
+
+  void Initialize(const MeasurementPackage& m);
+
 };
 
 #endif /* UKF_H */

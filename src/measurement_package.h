@@ -3,7 +3,8 @@
 
 #include "Eigen/Dense"
 
-class MeasurementPackage {
+class MeasurementPackage
+{
 public:
   long timestamp_;
 
@@ -13,7 +14,6 @@ public:
   } sensor_type_;
 
   Eigen::VectorXd raw_measurements_;
-
 };
 
 #endif /* MEASUREMENT_PACKAGE_H_ */
