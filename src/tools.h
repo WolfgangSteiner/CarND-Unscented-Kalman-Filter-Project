@@ -5,17 +5,15 @@
 #include <vector>
 #include "Eigen/Dense"
 //======================================================================================================================
-using Eigen::MatrixXd;
-using Eigen::VectorXd;
-using namespace std;
-typedef Eigen::Matrix<double, 2, 1>  Vector2f;
-//======================================================================================================================
 
 namespace Tools
 {
-  VectorXd CalculateRMSE(const vector<VectorXd>& estimations, const vector<VectorXd>& ground_truth);
-  MatrixXd CalculateJacobian(const VectorXd& x_state);
-  Vector2f PolarToCartesian(double rho, double phi);
+  Eigen::VectorXd CalculateRMSE(
+    const std::vector<Eigen::VectorXd>& estimations,
+    const std::vector<Eigen::VectorXd>& ground_truth);
+
+  Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
+  Eigen::Vector2f PolarToCartesian(double rho, double phi);
 };
 
 //======================================================================================================================

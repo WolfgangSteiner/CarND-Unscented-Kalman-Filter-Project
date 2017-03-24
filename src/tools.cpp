@@ -1,23 +1,27 @@
-//======================================================================================================================
+//==============================================================================================
 #include <iostream>
 #include <cmath>
 #include "tools.h"
-//======================================================================================================================
+//==============================================================================================
+using Eigen::Vector2d;
+using Eigen::Vector2f;
+using Eigen::VectorXd;
+using Eigen::MatrixXd;
+//==============================================================================================
 
-VectorXd Tools::CalculateRMSE(
-    const vector<VectorXd>& estimations,
-    const vector<VectorXd>& ground_truth)
+Eigen::VectorXd Tools::CalculateRMSE(
+  const std::vector<VectorXd>& estimations,
+  const std::vector<VectorXd>& ground_truth)
 {
   assert(estimations.size() > 0);
   assert(estimations.size() == ground_truth.size());
 
-  VectorXd rmse(4);
-  rmse << 0.0, 0.0, 0.0, 0.0;
+  VectorXd rmse = VectorXd::Zero(estimations[0].rows());
 
   for (int i = 0; i < estimations.size(); ++i)
   {
-    const auto& e = estimations[i];
-    const auto& g = ground_truth[i];
+    const VectorXd& e = estimations[i];
+    const VectorXd& g = ground_truth[i];
     VectorXd r = e-g;
     r = r.array() * r.array();
     rmse += r;
@@ -29,7 +33,7 @@ VectorXd Tools::CalculateRMSE(
 
 //----------------------------------------------------------------------------------------------------------------------
 
-MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
+Eigen::MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 {
   MatrixXd Hj(3,4);
   //recover state parameters
@@ -46,7 +50,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
   //check division by zero
   if(fabs(c1) < 0.0001)
   {
-    cout << "CalculateJacobian () - Error - Division by Zero" << endl;
+    std::cout << "CalculateJacobian () - Error - Division by Zero" << std::endl;
     return Hj;
   }
 
@@ -60,11 +64,11 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-Vector2f Tools::PolarToCartesian(double rho, double phi)
+Eigen::Vector2f Tools::PolarToCartesian(double rho, double phi)
 {
   auto result = Vector2f();
   result << rho * cos(phi), rho * sin(phi);
   return result;
 }
 
-//======================================================================================================================
+//==============================================================================================
