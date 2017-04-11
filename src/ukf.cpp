@@ -410,12 +410,12 @@ void UKF::UpdateLidar(const MeasurementPackage& m)
 {
   const MatrixXd Zsig = STransformSigmaPointsIntoLidarMeasurementSpace(Xsig_pred_);
   const VectorXd& z = m.Measurement();
-  const MatrixXd Tc = SCalcCrossCorrelationMatrix(Xsig_pred_, x_, Zsig, z, weights_);
 
   // predict radar measurement and covariance
   const VectorXd z_pred = SPredictMean(Zsig, weights_);
   const MatrixXd S = SPredictCovariance(Zsig, z_pred, weights_) + R_lidar_;
 
+  const MatrixXd Tc = SCalcCrossCorrelationMatrix(Xsig_pred_, x_, Zsig, z_pred, weights_);
   const MatrixXd K = Tc * S.inverse();
   VectorXd z_diff = z - z_pred;
 
@@ -438,14 +438,14 @@ void UKF::UpdateLidar(const MeasurementPackage& m)
  */
 void UKF::UpdateRadar(const MeasurementPackage& m)
 {
-  const MatrixXd Zsig = STransformSigmaPointsIntoRadarMeasurementSpace(Xsig_pred_);
   const VectorXd& z = m.Measurement();
-  const MatrixXd Tc = SCalcCrossCorrelationMatrix(Xsig_pred_, x_, Zsig, z, weights_);
+  const MatrixXd Zsig = STransformSigmaPointsIntoRadarMeasurementSpace(Xsig_pred_);
 
   // predict radar measurement and covariance
   const VectorXd z_pred = SPredictMean(Zsig, weights_);
   const MatrixXd S = SPredictCovariance(Zsig, z_pred, weights_) + R_radar_;
 
+  const MatrixXd Tc = SCalcCrossCorrelationMatrix(Xsig_pred_, x_, Zsig, z_pred, weights_);
   const MatrixXd K = Tc * S.inverse();
   VectorXd z_diff = z - z_pred;
   SNormalizeAngle(z_diff, 1);
