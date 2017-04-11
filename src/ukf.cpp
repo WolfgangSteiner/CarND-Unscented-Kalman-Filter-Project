@@ -408,8 +408,8 @@ void UKF::Predict(double aDeltaT)
 
 void UKF::UpdateLidar(const MeasurementPackage& m)
 {
-  const MatrixXd Zsig = STransformSigmaPointsIntoLidarMeasurementSpace(Xsig_pred_);
   const VectorXd& z = m.Measurement();
+  const MatrixXd Zsig = STransformSigmaPointsIntoLidarMeasurementSpace(Xsig_pred_);
 
   // predict radar measurement and covariance
   const VectorXd z_pred = SPredictMean(Zsig, weights_);
