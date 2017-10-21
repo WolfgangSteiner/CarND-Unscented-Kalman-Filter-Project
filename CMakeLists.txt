@@ -2,7 +2,7 @@ project(UnscentedKF)
 
 cmake_minimum_required (VERSION 3.5)
 
-add_definitions(-std=c++0x)
+add_definitions(-std=c++0x -g)
 
 set(sources
    src/ukf.cpp

@@ -98,6 +98,10 @@ public:
     ///* Augmented state dimension
     int n_aug_;
 
+    int n_z_radar_;
+    int n_z_lidar_;
+    int n_sigma_;
+
     ///* Sigma point spreading parameter
     double lambda_;
 
@@ -112,6 +116,9 @@ public:
 
     // laser measurement covariance matrix
     Eigen::MatrixXd R_lidar_;
+
+    Eigen::MatrixXd H_lidar_;
+
 };
 
 #endif /* UKF_H */
